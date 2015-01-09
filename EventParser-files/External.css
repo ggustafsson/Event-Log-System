@@ -1,0 +1,16 @@
+/* The following id's can be used inside of this file:
+ *
+ *  #main - Div containing the whole webpage.
+ *  #bar_graphX - Canvas object for each bar graph.
+ *
+ * The style of bar graphs can unfortunately not be controlled from here. The
+ * colors are defined inside of "EventParser.rb" and to change the Chart.js
+ * options you have to add settings to the file "External.js".
+ */
+
+body {
+  font-family: Helvetica;
+  font-size: 16px;
+  padding: 10px;
+  padding-top: 0px;
+}
