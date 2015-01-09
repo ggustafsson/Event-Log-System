@@ -22,12 +22,12 @@ things.
 
 Components
 ----------
-- **EventLogger** (runs on Raspberry Pi): Logs events and notifies the
-  server running **EventServer**.
-- **EventServer** (runs on server): Waits for incoming log messages and also
-  shares the whole log file through HTTP.
-- **EventParser** (runs on client): Parses the log file and create a HTML
-  page with bar graphs etc.
+- **EventLogger** (runs on Raspberry Pi): Logs events and notifies the server
+  running **EventServer**.
+- **EventServer** (runs on server): Waits for incoming log messages from
+  **EventLogger** and also shares the whole log file through HTTP.
+- **EventParser** (runs on client): Parses the log file and create a HTML page
+  with bar graphs etc.
 
 Dependencies
 ------------
