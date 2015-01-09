@@ -8,7 +8,7 @@ Event Log System
 ![EventParser](https://github.com/ggustafsson/Event-Log-System/raw/master/Previews/EventParser.png)
 
 The log report is too big to display. It can be found here:
-https://github.com/ggustafsson/Event-Log-System/raw/master/Previews/Log-Report.png
+https://github.com/ggustafsson/Event-Log-System/raw/master/Previews/Log%20Report.png
 
 Description
 -----------
@@ -31,14 +31,14 @@ Components
 
 Dependencies
 ------------
-- **EventLogger**:
+- EventLogger:
   - **Raspberry Pi**
   - **Python 3**
   - **RPi.GPIO**
-- **EventServer**:
-  - **Ruby**
-- **EventParser**:
-  - **Ruby**
+- EventServer:
+  - **Ruby 2**
+- EventParser:
+  - **Ruby 2**
 
 License
 -------
