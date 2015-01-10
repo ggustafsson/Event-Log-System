@@ -65,14 +65,14 @@ loop do
         file.puts message
       end
 
-      socket.print "ACK\n" # Send back acknowledge message.
+      socket.puts "ACK" # Send back acknowledge message.
     # Check if incoming command starts with "WARN ".
     elsif request.include?("WARN ")
       id = request.split(" ")[1] # Extract the device id.
       print "#{time} - #{color_warning}Warning received!#{color_normal} "
       puts "Unreported message(s) exist on #{id}."
 
-      socket.print "ACK\n" # Send back acknowledge message.
+      socket.puts "ACK" # Send back acknowledge message.
     # Check if incoming command is a normal HTTP GET command.
     elsif request.include?("GET / HTTP") or
           request.include?("GET /index.html HTTP")
