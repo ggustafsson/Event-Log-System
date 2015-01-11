@@ -44,11 +44,22 @@ tcp_timeout = 1 # When should TCP connections timeout? Blocking connections!
 ###############################################################################
 
 import RPi.GPIO as GPIO # Extra module that control Raspberry Pi GPIO channels.
+import os
 import socket
 import sys
 import time
 from datetime import datetime
-from os import path
+
+# Don't start if file log_file_unsent exist. We want to force users to take
+# care of it before continuing.
+if os.path.isfile(log_file_unsent):
+    print("File '%s' found! Merge it with log file on server and remove." %
+          log_file_unsent)
+    sys.exit(1)
+
+if os.geteuid() != 0:
+    print("You must run this as root! Access to /dev/mem is needed for GPIO.")
+    sys.exit(1)
 
 unsent_messages = 0 # Indicates if there are unsent messages. On/off.
 color_normal = "\033[0m"
@@ -129,13 +140,6 @@ def log_event(log_message):
     # Write down all log messages to file log_file.
     with open(log_file, "a") as file:
         file.write(log_message)
-
-# Don't start if file log_file_unsent exist. We want to force users to take
-# care of it before continuing.
-if path.isfile(log_file_unsent):
-    print("File '%s' found! Merge it with log file on server and remove." %
-          log_file_unsent)
-    sys.exit(1)
 
 print("EventLogger started. Sending logs to host %s." % log_server)
 print("Local logging to '%s', unsent messages in '%s'." % (log_file, \
