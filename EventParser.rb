@@ -109,6 +109,7 @@ CSV.foreach(input) do |row|
   begin
     event_date = Date.parse(row[0])
     event_time = Time.parse(row[1])
+    event_device = Integer(row[2])
   rescue
     puts "Invalid date or time on line #{$.}. Skipping!"
     next
@@ -119,7 +120,7 @@ CSV.foreach(input) do |row|
   event_date_time = Time.parse("#{row[0]} #{row[1]}")
 
   events += 1
-  events_dev[row[2].to_i] += 1
+  events_dev[event_device] += 1
 
   # Save event date the first time and after that always compare values.
   if events_date_min == ""
