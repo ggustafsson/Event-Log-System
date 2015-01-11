@@ -25,18 +25,19 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ###############################################################################
-# Version: 1.0                                                                #
+# Version: 1.0.1                                                              #
 #     Web: https://github.com/ggustafsson/Event-Log-System                    #
 #     Git: https://github.com/ggustafsson/Event-Log-System.git                #
 #   Email: gustafsson.g@gmail.com                                             #
 ###############################################################################
 
-device_id = 1
+device_id = 1 # Only integers are allowed as id's.
 log_server = "172.20.10.2"
 log_port = 8080
 log_file = "logfile.csv"
 log_file_unsent = "logfile_unsent.csv"
 check_interval = 0.5 # How many seconds should we wait after each check?
+tcp_timeout = 1 # When should TCP connections timeout? Blocking connections!
 
 ###############################################################################
 # Do not change anything below this line except the event check section.      #
@@ -87,39 +88,47 @@ def log_event(log_message):
     time = now.strftime("%H:%M:%S")
 
     # log_message looks like "2013-01-15,12:35:00,1,None".
-    log_message = "%s,%s,%d,%s" % (date, time, device_id, log_message)
+    log_message = "%s,%s,%d,%s\n" % (date, time, device_id, log_message)
     # command_log looks like "LOG 2013-01-15,12:35:00,1,None".
-    command_log = ("LOG " + log_message).encode()
+    command_log = ("LOG %s" % log_message).encode()
     # command_warn looks like "WARN 1".
-    command_warn = ("WARN " + str(device_id)).encode()
+    command_warn = ("WARN %d\n" % device_id).encode()
 
     print("%s %s - Event triggered. Sending message: " % (date, time), end="");
     try:
         # Send a warning to EventServer if unsent messages exist.
         if unsent_messages == 1:
             tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            tcp.settimeout(tcp_timeout)
             tcp.connect((log_server, log_port))
             tcp.sendall(command_warn)
+            response = tcp.recv(3).decode()
             tcp.close()
-            unsent_messages = 0 # Reset unsent messages indicator.
+            if response == "ACK":
+                unsent_messages = 0 # Reset unsent messages indicator.
 
         # Try to send log message to EventServer.
         tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        tcp.settimeout(tcp_timeout)
         tcp.connect((log_server, log_port))
         tcp.sendall(command_log)
+        response = tcp.recv(3).decode()
         tcp.close()
-        print("succeded.")
+        if response == "ACK":
+            print("succeded.")
+        else:
+            raise
     except:
         unsent_messages = 1 # Indicate that there are unsent messages.
         print(color_warning + "FAILED!" + color_normal)
 
         # Write down all unsent log messages to file log_file_unsent.
         with open(log_file_unsent, "a") as file:
-            file.write(log_message + "\n")
+            file.write(log_message)
 
     # Write down all log messages to file log_file.
     with open(log_file, "a") as file:
-        file.write(log_message + "\n")
+        file.write(log_message)
 
 # Don't start if file log_file_unsent exist. We want to force users to take
 # care of it before continuing.
