@@ -7,7 +7,9 @@ Event Log System
 
 ![EventParser](https://github.com/ggustafsson/Event-Log-System/raw/master/Previews/EventParser.png)
 
-The log report is too big to display. It can be found here:
+![Log report](https://github.com/ggustafsson/Event-Log-System/raw/master/Previews/Log%20Report%20Shortened.png)
+
+The full log report is too big to display. It can be found here:
 https://github.com/ggustafsson/Event-Log-System/raw/master/Previews/Log%20Report.png
 
 Description
