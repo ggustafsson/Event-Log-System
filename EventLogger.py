@@ -67,6 +67,16 @@ color_warning = "\033[1;31m"
 
 ###############################################################################
 # Modify this code to check for your specific event!                          #
+#                                                                             #
+# Do whatever you want here but keep using the event_check() function name    #
+# and run the log_message() function when event is triggered. You can send an #
+# optional message to the function like this: log_message("Text")             #
+#                                                                             #
+# A good short introduction to GPIO on the Raspberry Pi can be found here:    #
+# http://www.raspberrypi.org/documentation/usage/gpio/                        #
+#                                                                             #
+# Documentation on using RPi.GPIO and Python can be found here:               #
+# http://sourceforge.net/p/raspberry-gpio-python/wiki/Home/                   #
 ###############################################################################
 gpio_pin = 5
 gpio_state_previous = 1 # HIGH is the default start state used.
