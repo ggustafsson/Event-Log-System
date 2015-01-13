@@ -23,7 +23,7 @@ things.
 3. Create simple statistical overview of logs.
 
 The best way to understand all of this is to read the file **Project
-Report.pdf**. Note that while writing this version 1.0.2 was the current
+Report.pdf**. Note that while writing this version 1.0.3 was the current
 version.
 
 Components

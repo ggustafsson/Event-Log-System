@@ -25,7 +25,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ###############################################################################
-# Version: 1.0.2                                                              #
+# Version: 1.0.3                                                              #
 #     Web: https://github.com/ggustafsson/Event-Log-System                    #
 #     Git: https://github.com/ggustafsson/Event-Log-System.git                #
 #   Email: gustafsson.g@gmail.com                                             #

@@ -25,7 +25,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ###############################################################################
-# Version: 1.0.2                                                              #
+# Version: 1.0.3                                                              #
 #     Web: https://github.com/ggustafsson/Event-Log-System                    #
 #     Git: https://github.com/ggustafsson/Event-Log-System.git                #
 #   Email: gustafsson.g@gmail.com                                             #
@@ -79,23 +79,23 @@ color_warning = "\033[1;31m"
 # http://sourceforge.net/p/raspberry-gpio-python/wiki/Home/                   #
 ###############################################################################
 gpio_pin = 5
-gpio_state_previous = 1 # HIGH is the default start state used.
+previous_state = 1 # HIGH is the default start state used.
 
 GPIO.setmode(GPIO.BCM) # Use Broadcom board layout. Alternative is BOARD.
 GPIO.setup(gpio_pin, GPIO.IN) # Set pin _gpio_pin_ as input type.
 
 def event_check():
     global gpio_pin
-    global gpio_state_previous
+    global previous_state
 
-    gpio_state_current = GPIO.input(gpio_pin) # Save current state.
-    log_message = "None" # Optional message sent with the log message.
+    current_state = GPIO.input(gpio_pin) # Save current state.
+    log_message = "-" # Optional message sent with the log message.
 
     # Check if current state is HIGH and previous was LOW. Equals triggered.
-    if gpio_state_current == 1 and gpio_state_previous == 0:
+    if current_state == 1 and previous_state == 0:
         log_event(log_message)
 
-    gpio_state_previous = gpio_state_current # Save current state for next run.
+    previous_state = current_state # Save current state for next run.
 ###############################################################################
 # End of custom code.                                                         #
 ###############################################################################
@@ -108,9 +108,9 @@ def log_event(log_message):
     date = now.strftime("%Y-%m-%d")
     time = now.strftime("%H:%M:%S")
 
-    # log_message looks like "2013-01-15,12:35:00,1,None".
+    # log_message looks like "2013-01-15,12:35:00,1,-".
     log_message = "%s,%s,%d,%s\n" % (date, time, device_id, log_message)
-    # command_log looks like "LOG 2013-01-15,12:35:00,1,None".
+    # command_log looks like "LOG 2013-01-15,12:35:00,1,-".
     command_log = ("LOG %s" % log_message).encode()
     # command_warn looks like "WARN 1".
     command_warn = ("WARN %d\n" % device_id).encode()
